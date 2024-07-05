@@ -9,7 +9,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 
-const String _apiKey = 'AIzaSyCXRGAXWZBLbkfmOrdbzE1T0PcA_Yhk_aI';
+const String _apiKey = 'YourApiKey';
 
 void main() {
   runApp(const GenerativeAISample());
