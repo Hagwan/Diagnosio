@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,14 +11,28 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 
-const String _apiKey = 'AIzaSyCXRGAXWZBLbkfmOrdbzE1T0PcA_Yhk_aI';
+const String _apiKey = '';
 
 void main() {
   runApp(const GenerativeAISample());
 }
 
-class GenerativeAISample extends StatelessWidget {
+class GenerativeAISample extends StatefulWidget {
   const GenerativeAISample({super.key});
+
+  @override
+  _GenerativeAISampleState createState() => _GenerativeAISampleState();
+}
+
+class _GenerativeAISampleState extends State<GenerativeAISample> {
+  ThemeMode _themeMode = ThemeMode.dark;
+
+  void _toggleTheme() {
+    setState(() {
+      _themeMode =
+          _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +45,36 @@ class GenerativeAISample extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: FlutterSplashScreen(useImmersiveMode: true,
-          duration: const Duration(milliseconds: 2000),
-          nextScreen: const ChatScreen(title: 'Diagnosio 👨‍⚕️'),
-          backgroundColor: Colors.white,
-          splashScreenBody: Center(
-            child: Lottie.asset(
-              "assets/images/lottie_loading_2.json",
-              repeat: false,
-            ),
-          ),),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.light,
+          seedColor: const Color.fromARGB(255, 171, 222, 244),
+        ),
+        useMaterial3: true,
+      ),
+      themeMode: _themeMode,
+      home: FlutterSplashScreen(
+        useImmersiveMode: true,
+        duration: const Duration(milliseconds: 2000),
+        nextScreen:
+            ChatScreen(title: 'Diagnosio 👨‍⚕️', toggleTheme: _toggleTheme),
+        backgroundColor: Colors.white,
+        splashScreenBody: Center(
+          child: Lottie.asset(
+            "assets/images/lottie_loading_2.json",
+            repeat: false,
+          ),
+        ),
+      ),
     );
   }
 }
 
-        
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.title});
+  const ChatScreen({super.key, required this.title, required this.toggleTheme});
 
   final String title;
+  final VoidCallback toggleTheme;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -58,20 +85,28 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-        widget.title,
-        style: GoogleFonts.rubik(
-          textStyle: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontSize: 20,
-              fontWeight: FontWeight.bold),
-        ),
-      )
-              .animate()
-              .fadeIn(duration: 900.ms, delay: 300.ms)
-              .shimmer(blendMode: BlendMode.srcOver, color: Colors.white12)
-              .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad)),
+        title: Text(
+          widget.title,
+          style: GoogleFonts.rubik(
+            textStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
+        )
+            .animate()
+            .fadeIn(duration: 900.ms, delay: 300.ms)
+            .shimmer(blendMode: BlendMode.srcOver, color: Colors.white12)
+            .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad),
+      ),
       body: const ChatWidget(apiKey: _apiKey),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        onPressed: widget.toggleTheme,
+        child: const Icon(Icons.brightness_6_rounded,
+            color: Colors.black87, size: 30),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
     );
   }
 }
