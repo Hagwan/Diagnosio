@@ -1,4 +1,6 @@
+import 'dart:ffi';
 import 'dart:io';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +13,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 
-const String _apiKey = '';
+const String _apiKey = 'YOUR_API_KEY';
 
 void main() {
   runApp(const GenerativeAISample());
@@ -85,6 +87,17 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        
+        actions: [
+          IconButton(
+            onPressed: widget.toggleTheme,
+            icon: const Icon(
+              Icons.brightness_6_rounded,
+            ),
+            color: Theme.of(context).colorScheme.primary,
+          )
+        ],
         title: Text(
           widget.title,
           style: GoogleFonts.rubik(
@@ -100,13 +113,6 @@ class _ChatScreenState extends State<ChatScreen> {
             .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad),
       ),
       body: const ChatWidget(apiKey: _apiKey),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        onPressed: widget.toggleTheme,
-        child: const Icon(Icons.brightness_6_rounded,
-            color: Colors.black87, size: 30),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
     );
   }
 }
@@ -162,21 +168,22 @@ class _ChatWidgetState extends State<ChatWidget> {
   Widget build(BuildContext context) {
     final textFieldDecoration = InputDecoration(
       contentPadding: const EdgeInsets.all(15),
-      hintText: 'Enter a prompt...',
+      hintText: 'How do you feel today?...',
       border: OutlineInputBorder(
         borderRadius: const BorderRadius.all(
           Radius.circular(14),
         ),
         borderSide: BorderSide(
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: const BorderRadius.all(
-          Radius.circular(14),
+          Radius.circular(15),
         ),
         borderSide: BorderSide(
-          color: Theme.of(context).colorScheme.secondary,
+          style: BorderStyle.solid,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
     );
@@ -219,7 +226,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               children: [
                 Expanded(
                   child: TextField(
-                    autofocus: true,
+                    autofocus: false,
                     focusNode: _textFieldFocus,
                     decoration: textFieldDecoration,
                     controller: _textController,
