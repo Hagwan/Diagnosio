@@ -1,23 +1,36 @@
 [![flutter_sample](https://github.com/google/generative-ai-dart/actions/workflows/flutter_sample.yml/badge.svg)](https://github.com/google/generative-ai-dart/actions/workflows/flutter_sample.yml)
 
-# Flutter generative AI sample
+# Diagnosio
 
-A Flutter chat application that uses the `google_generative_ai` package.
+Diagnosio is a Flutter-based application designed to help users identify diseases through text or image input before visiting a real doctor. This project leverages AI to provide preliminary diagnoses, making it a useful tool for quick health assessments.
 
-## Getting started
 
-To use the Gemini API, you'll need an API key. If you don't already have one, 
-create a key in Google AI Studio: https://aistudio.google.com/app/apikey.
 
-When running the app, include your API key using the `--dart-define` flag:
+## Features
+Text Input: Users can describe their symptoms in text, and the app will analyze the input to suggest possible conditions.
+
+Image Input: Users can upload images of affected areas (like skin rashes) for analysis and diagnosis.
+
+AI Integration: The app uses machine learning models to provide accurate and reliable diagnoses.
+
+User-Friendly Interface: Designed with a simple and intuitive interface for easy navigation and usage.
+
+
+## Installation
+Flutter SDK: Installation Guide
 
 ```bash
-flutter run --dart-define=API_KEY=$GOOGLE_API_KEY
+git clone https://github.com/Hagwan/Diagnosio.git
+cd Diagnosio
+
+```
+### Install dependencies:
+```bash
+flutter pub get
 ```
 
-If you use VSCode, you can [specify `--dart-define`
-variables](https://dartcode.org/docs/using-dart-define-in-flutter/) in your
-launch.json file.
+### Run the application:
 
-If you use Android Studio or IntelliJ you can use run / debug configurations
-(https://www.jetbrains.com/help/idea/run-debug-configuration.html).
+```bash
+flutter run
+```
